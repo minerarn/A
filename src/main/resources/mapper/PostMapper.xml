@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.a.mapper.PostMapper">
+
+    <select id="findAll" resultType="com.example.a.entity.Post">
+        SELECT p.*, t.name as typeName
+        FROM post p
+                 LEFT JOIN type t ON p.type_id = t.id
+        ORDER BY p.create_time DESC
+    </select>
+
+    <select id="findById" resultType="com.example.a.entity.Post">
+        SELECT p.*, t.name as typeName
+        FROM post p
+                 LEFT JOIN type t ON p.type_id = t.id
+        WHERE p.id = #{id}
+    </select>
+
+    <select id="search" resultType="com.example.a.entity.Post">
+        SELECT p.*, t.name as typeName
+        FROM post p
+        LEFT JOIN type t ON p.type_id = t.id
+        <where>
+            <if test="title != null and title != ''">
+                AND p.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="author != null and author != ''">
+                AND p.author LIKE CONCAT('%', #{author}, '%')
+            </if>
+            <if test="minViews != null">
+                AND p.views >= #{minViews}
+            </if>
+        </where>
+        ORDER BY p.create_time DESC
+    </select>
+
+    <select id="findByTypeId" resultType="com.example.a.entity.Post">
+        SELECT p.*, t.name as typeName
+        FROM post p
+                 LEFT JOIN type t ON p.type_id = t.id
+        WHERE p.type_id = #{typeId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post (title, author, content, views, type_id, create_time)
+        VALUES (#{title}, #{author}, #{content}, #{views}, #{typeId}, #{createTime})
+    </insert>
+
+    <update id="update">
+        UPDATE post
+        SET title = #{title},
+            author = #{author},
+            content = #{content},
+            views = #{views},
+            type_id = #{typeId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM post WHERE id = #{id}
+    </delete>
+
+</mapper>

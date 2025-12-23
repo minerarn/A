@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>All Posts</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <h5>Types</h5>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="t : ${types}">
+                    <a th:href="@{'/types/' + ${t.id} + '/posts'}" th:text="${t.name}"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div th:each="post : ${posts}" class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}" style="text-decoration: none; color: inherit;"></a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">by <span th:text="${post.author}"></span> - <span th:text="${post.views}"></span> views - Category: <span th:text="${post.typeName}"></span></h6>
+                    <p class="card-text" th:text="${post.content}"></p>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" class="btn btn-outline-primary btn-sm">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
