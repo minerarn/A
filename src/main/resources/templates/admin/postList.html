@@ -15,7 +15,13 @@
             </span>
             <span th:unless="${typeId != null}">所有博文</span>
         </h1>
-        <a class="btn btn-primary" th:href="@{/admin/posts/new}">+ 新增博文</a>
+        <div>
+            <a class="btn btn-outline-primary me-2" th:href="@{/admin/types}">类别管理</a>
+            <a class="btn btn-primary me-2" th:href="@{/admin/posts/new}">+ 新增博文</a>
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <button class="btn btn-outline-danger" type="submit">退出登录</button>
+            </form>
+        </div>
     </div>
     
     <!-- 搜索表单 -->

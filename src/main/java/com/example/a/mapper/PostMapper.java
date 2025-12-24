@@ -28,4 +28,13 @@ public interface PostMapper {
     void insert(Post post);
     void update(Post post);
     void delete(Long id);
+    
+    // 根据类别ID删除所有博文
+    void deleteByTypeId(Long typeId);
+    
+    // 6. 查询启用类别下的所有博文（用于前台显示）
+    List<Post> findAllWithEnabledType();
+    
+    // 7. 查询指定启用类别下的博文（用于前台分类筛选）
+    List<Post> findByEnabledTypeId(Long typeId);
 }

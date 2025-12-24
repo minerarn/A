@@ -1,8 +1,10 @@
 package com.example.a.service.impl;
 
 import com.example.a.entity.Type;
+import com.example.a.mapper.PostMapper;
 import com.example.a.mapper.TypeMapper;
 import com.example.a.service.TypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.List;
 public class TypeServiceImpl implements TypeService {
 
     private final TypeMapper typeMapper;
+    
+    @Autowired
+    private PostMapper postMapper;
 
     public TypeServiceImpl(TypeMapper typeMapper) {
         this.typeMapper = typeMapper;
@@ -45,6 +50,9 @@ public class TypeServiceImpl implements TypeService {
     public void delete(Long id) {
         // 此处删除操作会被 LogAspect 拦截记录日志
         if (id != null) {
+            // 先删除该类别下的所有博文
+            postMapper.deleteByTypeId(id);
+            // 再删除类别
             typeMapper.delete(id);
         }
     }
@@ -57,5 +65,10 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public List<Type> findAllWithPostCount() {
         return typeMapper.findAllWithPostCount();
+    }
+
+    @Override
+    public List<Type> findAllEnabled() {
+        return typeMapper.findAllEnabled();
     }
 }

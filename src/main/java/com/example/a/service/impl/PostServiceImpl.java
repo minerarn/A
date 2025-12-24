@@ -67,4 +67,14 @@ public class PostServiceImpl implements PostService {
     public void insert(Post post) {
         postMapper.insert(post);
     }
+
+    @Override
+    public List<Post> findAllWithEnabledType() {
+        return postMapper.findAllWithEnabledType();
+    }
+
+    @Override
+    public List<Post> findByEnabledTypeId(Long typeId) {
+        return postMapper.findByEnabledTypeId(typeId);
+    }
 }

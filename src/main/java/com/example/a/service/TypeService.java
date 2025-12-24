@@ -12,4 +12,7 @@ public interface TypeService {
     void delete(Long id);
     List<Type> searchByName(String name);
     List<Type> findAllWithPostCount();
+    
+    // 查询所有启用的类别（用于前台显示）
+    List<Type> findAllEnabled();
 }

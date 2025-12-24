@@ -21,23 +21,23 @@ public class PostController {
     @Autowired
     private TypeService typeService;
 
-    // 首页：展示所有博文
+    // 首页：展示所有博文（仅显示启用类别下的博文）
     @GetMapping("/")
     public String home(Model model) {
-        // 建议使用你的 search 或 list 方法获取所有博文
-        List<Post> posts = postService.findAll();
-        List<Type> types = typeService.findAll(); // 获取所有类别
+        // 仅查询启用类别下的博文
+        List<Post> posts = postService.findAllWithEnabledType();
+        List<Type> types = typeService.findAllEnabled(); // 仅获取启用的类别
         model.addAttribute("posts", posts);
         model.addAttribute("types", types);
         return "front/postList"; // 直接跳到前台列表页
     }
 
-    // 按类别查看博文
+    // 按类别查看博文（仅显示启用类别下的博文）
     @GetMapping("/types/{typeId}/posts")
     public String postsByType(@PathVariable Long typeId, Model model) {
         // 作业要求：点击类别名称查看该类别下所有博文
-        List<Post> posts = postService.findByTypeId(typeId);
-        List<Type> types = typeService.findAll();
+        List<Post> posts = postService.findByEnabledTypeId(typeId);
+        List<Type> types = typeService.findAllEnabled();
         model.addAttribute("posts", posts);
         model.addAttribute("types", types);
         return "front/postList";

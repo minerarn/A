@@ -15,4 +15,7 @@ public interface TypeMapper {
     void delete(Long id);
     List<Type> searchByName(@Param("name") String name);
     List<Type> findAllWithPostCount();
+    
+    // 查询所有启用的类别（用于前台显示）
+    List<Type> findAllEnabled();
 }

@@ -30,4 +30,10 @@ public interface PostService {
     List<Post> findByTypeId(Long typeId);
 
     void insert(Post post);
+    
+    // 9. 查询启用类别下的所有博文（用于前台显示）
+    List<Post> findAllWithEnabledType();
+    
+    // 10. 查询指定启用类别下的博文（用于前台分类筛选）
+    List<Post> findByEnabledTypeId(Long typeId);
 }

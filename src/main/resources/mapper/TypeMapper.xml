@@ -38,4 +38,8 @@
         WHERE name LIKE CONCAT('%', #{name}, '%')
     </select>
 
+    <select id="findAllEnabled" resultType="com.example.a.entity.Type">
+        SELECT * FROM type WHERE enabled = 1 ORDER BY id DESC
+    </select>
+
 </mapper>
