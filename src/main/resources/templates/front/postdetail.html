@@ -38,10 +38,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" th:href="@{/}">个人博客系统</a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" th:href="@{/}">首页</a>
-            <a class="nav-link" th:href="@{/about}">关于</a>
-            <a class="nav-link btn btn-outline-light btn-sm ms-2" th:href="@{/admin/posts}" sec:authorize="hasRole('ADMIN')">管理后台</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">关于</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <!-- 未登录时显示登录按钮 -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" class="btn btn-outline-light me-2">登录</a>
+                </div>
+                
+                <!-- 已登录时显示用户名和登出按钮 -->
+                <div sec:authorize="isAuthenticated()" class="d-flex align-items-center">
+                    <span class="text-light me-3" sec:authentication="name">用户名</span>
+                    <a th:href="@{/admin/posts}" class="btn btn-success btn-sm me-2" sec:authorize="hasRole('ADMIN')">
+                        管理后台
+                    </a>
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light btn-sm">登出</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -64,11 +89,8 @@
 
         <hr class="my-5">
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-center">
             <a th:href="@{/}" class="btn btn-outline-primary">← 返回首页</a>
-            <div sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{'/admin/posts/edit/' + ${post.id}}" class="btn btn-warning">编辑此文</a>
-            </div>
         </div>
     </div>
 

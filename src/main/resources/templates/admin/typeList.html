@@ -27,7 +27,7 @@
                 <tr th:each="t : ${types}">
                     <td th:text="${t.id}"></td>
                     <td>
-                        <a th:href="@{'/types/' + ${t.id} + '/posts'}"
+                        <a th:href="@{'/admin/posts?typeId=' + ${t.id}}"
                            th:text="${t.name}" class="text-decoration-none fw-bold"></a>
                     </td>
                     <td>

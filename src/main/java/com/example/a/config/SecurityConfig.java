@@ -8,13 +8,33 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.regex.Pattern;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        Pattern bcryptPattern = Pattern.compile("^\\$2[aby]\\$.*");
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return bcrypt.encode(rawPassword);
+            }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                if (encodedPassword == null) {
+                    return false;
+                }
+                if (bcryptPattern.matcher(encodedPassword).matches()) {
+                    return bcrypt.matches(rawPassword, encodedPassword);
+                }
+                return rawPassword != null && rawPassword.toString().equals(encodedPassword);
+            }
+        };
     }
 
     @Bean

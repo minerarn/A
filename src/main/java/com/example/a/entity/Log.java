@@ -3,16 +3,16 @@ package com.example.a.entity;
 import java.time.LocalDateTime;
 
 public class Log {
-    private Integer id;
+    private Long id;
     private String username;
     private String operation;
     private LocalDateTime operateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

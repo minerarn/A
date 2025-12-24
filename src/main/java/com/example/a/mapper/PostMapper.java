@@ -18,7 +18,8 @@ public interface PostMapper {
     // 3. 核心功能：多条件动态搜索（标题、作者、最低点击量）
     List<Post> search(@Param("title") String title,
                       @Param("author") String author,
-                      @Param("minViews") Integer minViews);
+                      @Param("minViews") Integer minViews,
+                      @Param("typeId") Long typeId);
 
     // 4. 根据分类筛选博文
     List<Post> findByTypeId(Long typeId);

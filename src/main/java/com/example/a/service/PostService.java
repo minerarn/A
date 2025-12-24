@@ -24,7 +24,7 @@ public interface PostService {
     void delete(Long id);
 
     // 7. 多条件搜索功能
-    List<Post> search(String title, String author, Integer minViews);
+    List<Post> search(String title, String author, Integer minViews, Long typeId);
 
     // 8. 前台分类筛选功能
     List<Post> findByTypeId(Long typeId);

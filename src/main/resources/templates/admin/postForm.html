@@ -9,7 +9,9 @@
 <div class="container mt-4">
     <h1 class="mb-4" th:text="${post.id}==null ? '发布新博文' : '修改博文'"></h1>
 
-    <form th:action="${post.id}==null ? @{/admin/posts} : @{/admin/posts/update}" th:object="${post}" method="post" class="card p-4 shadow-sm">
+    <form th:action="${post.id}==null ? @{/admin/posts/save} : @{/admin/posts/update}" th:object="${post}" method="post" class="card p-4 shadow-sm">
+
+        <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
         <input type="hidden" th:field="*{id}" />
 
@@ -27,7 +29,7 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">所属分类</label>
-                <select class="form-select" th:field="*{typeId}" required>
+                <select class="form-select" th:field="*{typeId}">
                     <option value="">-- 请选择分类 --</option>
                     <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.name}"></option>
                 </select>
@@ -36,6 +38,11 @@
                 <label class="form-label">阅读量 (Views)</label>
                 <input type="number" class="form-control" th:field="*{views}" th:value="${post.id}==null ? 0 : *{views}" required />
             </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">新增类别（可选）</label>
+            <input class="form-control" name="newTypeName" placeholder="不选分类时，可在这里直接输入新类别名称" />
         </div>
 
         <div class="mb-3">

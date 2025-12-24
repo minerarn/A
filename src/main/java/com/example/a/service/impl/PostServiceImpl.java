@@ -46,14 +46,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void delete(Long id) {
-
+        if (id != null) {
+            postMapper.delete(id);
+        }
     }
 
 
     // 4. 多条件搜索实现
     @Override
-    public List<Post> search(String title, String author, Integer minViews) {
-        return postMapper.search(title, author, minViews);
+    public List<Post> search(String title, String author, Integer minViews, Long typeId) {
+        return postMapper.search(title, author, minViews, typeId);
     }
 
     @Override
@@ -63,6 +65,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void insert(Post post) {
-
+        postMapper.insert(post);
     }
 }
